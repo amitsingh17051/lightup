@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
   
     const loginUserFormHandler = (event) => {
@@ -31,7 +30,7 @@ function Login() {
             }
         })
         .then(res => res.json())
-        .then(data => data.isLoggedIn ? history.push("/add-idea"): null )
+        .then(data => data.isLoggedIn ? navigate("/"): null )
     }, [])
 
 
