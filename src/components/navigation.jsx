@@ -4,6 +4,7 @@ import Index from '../pages';
 import Login from '../pages/login';
 import Register from '../pages/register';
 import AddIdea from '../pages/add-idea';
+import IdeaManager from '../pages/idea-manager';
 import LoginNavItem from './loginNavItem';
 
 
@@ -11,6 +12,7 @@ import LoginNavItem from './loginNavItem';
 function Navigation() {
 
     const [showLogin, setShowLogin] = useState(true);
+    const [userName , setUserName] = useState();
     console.log(showLogin)
 
     useEffect(() => {
@@ -21,7 +23,12 @@ function Navigation() {
           }
       })
       .then(res => res.json())
-      .then(data => data.isLoggedIn ? setShowLogin(false): null )
+      .then(data => {
+        if(data.isLoggedIn){
+          setShowLogin(false);
+          setUserName(data.name)
+        } 
+      })
     }, [])
 
 
@@ -38,9 +45,17 @@ function Navigation() {
                   { showLogin ?   
                     <LoginNavItem />
                   : 
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/logout">Logout</Link>
-                  </li>
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/idea-manager">Manage Your Ideas</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/">{userName}</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/logout">Logout</Link>
+                    </li>
+                  </>
                   }   
                 </ul> 
             </div>
@@ -57,6 +72,9 @@ function Navigation() {
 
         <Routes>
           <Route path="/add-idea" element={<AddIdea />} />
+        </Routes>
+        <Routes>
+          <Route path="/idea-manager" element={<IdeaManager />} />
         </Routes>
       </div>
     )

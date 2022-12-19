@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 function AddIdea() {
@@ -6,7 +6,7 @@ function AddIdea() {
   const [description, setDescription] = useState('');
   const [userId, setUserId] = useState(0);
   const [postData, setPostData] = useState('');
-
+ 
   const addIdeaFormHandler = (event) => {
     event.preventDefault();
 
@@ -22,6 +22,21 @@ function AddIdea() {
 
     console.log(postData);
   }  
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/user/username', {
+        method: 'POST',
+        headers: {
+            "x-access-token": localStorage.getItem('token')
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.isLoggedIn){
+        setUserId(data.id)
+      } 
+    })
+  }, [])
 
   return (
     <div className="add-idea  container mt-5"> 
@@ -42,10 +57,9 @@ function AddIdea() {
                             <label for="formFileSm" className="form-label">Uploads</label>
                             <input className="form-control form-control-sm" id="formFileSm" type="file" />
                         </div>
-                        <div className="mb-3">
-                            <label for="exampleInputPassword1" className="form-label">User id</label>
-                            <input type="text" name="userId" className="form-control" onChange={event => setUserId(event.target.value)} value={userId} />
-                        </div>
+                       
+
+                        
                         
                         <button type="submit" className="btn text-white btn-warning">Register</button>
                     </form>
