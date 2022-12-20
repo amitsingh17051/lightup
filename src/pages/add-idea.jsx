@@ -18,7 +18,10 @@ function AddIdea() {
     };
     fetch('http://localhost:8000/api/idea/', requestOptions)
         .then(response => response.json())
-        .then(data => this.setPostData({ postId: data.id }));
+        .then(data => {
+            window.history.pushState({}, '', '/idea-manager')
+            location.reload();
+        });
 
     console.log(postData);
   }  

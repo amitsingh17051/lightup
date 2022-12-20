@@ -18,7 +18,18 @@ function Login() {
       };
       fetch('http://localhost:8000/api/user/login', requestOptions)
           .then(response => response.json())
-          .then(data => localStorage.setItem("token", data.token));
+          .then(data => {
+
+            if(data.status) {
+                localStorage.setItem("token", data.token)
+                window.history.pushState({}, '', '/')
+                location.reload();
+            } else {
+                alert(data.msg)
+            }
+           
+            
+        });
   
     }  
 
@@ -30,7 +41,7 @@ function Login() {
             }
         })
         .then(res => res.json())
-        .then(data => data.isLoggedIn ? navigate("/"): null )
+        .then(data => data.isLoggedIn ? window.history.pushState({}, '', '/'): null )
     }, [])
 
 

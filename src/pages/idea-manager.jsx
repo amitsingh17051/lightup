@@ -5,19 +5,8 @@ import IdeaCard from '../components/single-idea-card';
 function IdeaManager() {
     const [userId, setUserId] = useState(false);
     const [ideas, setIdeas] = useState([]);
-    
- 
-    
+
     useEffect(() => {
-
-        const requestOptions = {
-            headers: { 'Content-Type': 'application/json' },
-            mode: 'cors'
-        };
-        fetch('http://localhost:8000/api/idea/user/'+userId, requestOptions)
-            .then(response => response.json())
-            .then(data => setIdeas(data.userIdea));
-
             
         fetch('http://localhost:8000/api/user/username', {
             method: 'POST',
@@ -29,13 +18,21 @@ function IdeaManager() {
         .then(data => {
             if(data.isLoggedIn){
             setUserId(data.id)
+            const requestOptions = {
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors'
+            };
+            fetch('http://localhost:8000/api/idea/user/'+data.id, requestOptions)
+                .then(response => response.json())
+                .then(data => setIdeas(data.userIdea));
+    
             } 
         })
 
         
     }, [])
       
-   
+    
 
     return (
         <>
@@ -44,7 +41,10 @@ function IdeaManager() {
                     <h1>Manage Your Idea’s here..</h1>
                     <div className="row mt-5">
                         <div className="col-md-8">
-                            <IdeaCard ideas={ideas}/>
+                            {ideas.map((idea,index) => (
+                               
+                                <IdeaCard  id={idea._id} key={index} name={idea.name} description={idea.description}/>
+                            ))}
                         </div>
                     </div>
                 </section>

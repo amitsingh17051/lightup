@@ -57,6 +57,9 @@ function Navigation() {
                     <li className="nav-item">
                       <Link className="nav-link" to="/logout">Logout</Link>
                     </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/add-idea">Add Your Ideas</Link>
+                    </li>
                   </>
                   }   
                 </ul> 
