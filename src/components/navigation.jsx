@@ -13,7 +13,8 @@ function Navigation() {
 
     const [showLogin, setShowLogin] = useState(true);
     const [userName , setUserName] = useState();
-    console.log(showLogin)
+    const [userId, setUserId] = useState();
+
 
     useEffect(() => {
       fetch('http://localhost:8000/api/user/username', {
@@ -27,6 +28,7 @@ function Navigation() {
         if(data.isLoggedIn){
           setShowLogin(false);
           setUserName(data.name)
+          setUserId(data.id)
         } 
       })
     }, [])
