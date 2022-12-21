@@ -26,7 +26,10 @@ function IdeaManager() {
                 .then(response => response.json())
                 .then(data => setIdeas(data.userIdea));
     
-            } 
+            } else {
+                window.history.pushState({}, '', '/')
+                location.reload();
+            }
         })
 
         

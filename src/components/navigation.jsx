@@ -6,7 +6,8 @@ import Register from '../pages/register';
 import AddIdea from '../pages/add-idea';
 import IdeaManager from '../pages/idea-manager';
 import LoginNavItem from './loginNavItem';
-
+import EditIdea from '../pages/edit-idea';
+import LogOut from '../pages/logout';
 
 
 function Navigation() {
@@ -14,7 +15,16 @@ function Navigation() {
     const [showLogin, setShowLogin] = useState(true);
     const [userName , setUserName] = useState();
     const [userId, setUserId] = useState();
+    
 
+    const showDropDownHandler = () => {
+      const dropDown = document.querySelector('ul.dropdown-menu');
+      if (dropDown.style.display === "none") {
+        dropDown.style.display = "block";
+      } else {
+        dropDown.style.display = "none";
+      }
+    }
 
     useEffect(() => {
       fetch('http://localhost:8000/api/user/username', {
@@ -48,18 +58,24 @@ function Navigation() {
                     <LoginNavItem />
                   : 
                   <>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/idea-manager">Manage Your Ideas</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/">{userName}</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/logout">Logout</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/add-idea">Add Your Ideas</Link>
-                    </li>
+                 
+                  <li className="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={showDropDownHandler}>
+                    {userName}
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/idea-manager">Manage Your Ideas</Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/logout">Logout</Link>
+                      </li>
+                     
+                    </ul>
+                  </li>
+                  <li className="nav-item pr-4">
+                    <Link className="btn btn-warning text-white" to="/add-idea">Add Your Ideas</Link>
+                  </li>
                   </>
                   }   
                 </ul> 
@@ -74,12 +90,17 @@ function Navigation() {
         <Routes>
           <Route path="/register" element={<Register />} />
         </Routes>
-
         <Routes>
           <Route path="/add-idea" element={<AddIdea />} />
         </Routes>
         <Routes>
+          <Route path="/edit-idea/:id" element={<EditIdea />} />
+        </Routes>
+        <Routes>
           <Route path="/idea-manager" element={<IdeaManager />} />
+        </Routes>
+        <Routes>
+          <Route path="/logout" element={<LogOut />} />
         </Routes>
       </div>
     )

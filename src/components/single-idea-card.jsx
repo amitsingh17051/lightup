@@ -4,22 +4,23 @@ function IdeaCard({name,description,id}) {
 
     const deleteIdeaHandler = (event) => {
         const ideaId = event.target.getAttribute("data-id");
-        console.log(event.target.parentElement)
-        // const requestOptions = {
-        //     method: 'DELETE',
-        //     headers: { 'Content-Type': 'application/json' },
-        // };
-        // fetch('http://localhost:8000/api/idea/'+ideaId, requestOptions)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         if(data.status) {
-                    
-        //         }
-        //         alert(data.msg)
-        //     });
-
-        // } 
-    }
+        const confirmDelete = confirm("Are you sure you want to delete this idea?");
+        if(confirmDelete) {
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            };
+            fetch('http://localhost:8000/api/idea/'+ideaId, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status) {
+                        document.querySelector('#idea_'+ideaId).remove();
+                    }
+                    alert(data.msg)
+                })
+        }
+    } 
+    
    
     return (
         <div id={`idea_${id}`} className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -32,9 +33,9 @@ function IdeaCard({name,description,id}) {
                 <div className="mb-1 text-muted">Nov 12</div>
                 <p className="card-text mb-auto">{description}</p>
                 <div className="idea-manage-action d-flex gap-3">
-                    <a href="#" className="stretched-link">Edit</a>
-                    <a href="#" className="stretched-link">View</a>
-                    <a href="#" className="stretched-link"  data-id={`${id}`}  onClick={deleteIdeaHandler}>Delete</a>
+                    <a href={`/edit-idea/${id}`} className="">Edit</a>
+                    <a href={`/edit-idea/${id}`} className="">View</a>
+                    <a href="#" className=""  data-id={`${id}`}  onClick={deleteIdeaHandler}>Delete</a>
                 </div>
             </div>
         </div>

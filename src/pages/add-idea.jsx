@@ -6,7 +6,9 @@ function AddIdea() {
   const [description, setDescription] = useState('');
   const [userId, setUserId] = useState(0);
   const [postData, setPostData] = useState('');
+
  
+  
   const addIdeaFormHandler = (event) => {
     event.preventDefault();
 
@@ -37,7 +39,10 @@ function AddIdea() {
     .then(data => {
       if(data.isLoggedIn){
         setUserId(data.id)
-      } 
+      } else {
+        window.history.pushState({}, '', '/')
+        location.reload();
+      }
     })
   }, [])
 
@@ -64,7 +69,7 @@ function AddIdea() {
 
                         
                         
-                        <button type="submit" className="btn text-white btn-warning">Register</button>
+                        <button type="submit" className="btn text-white btn-warning">Add</button>
                     </form>
                 </div>
             </div>
