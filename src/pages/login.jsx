@@ -27,10 +27,7 @@ function Login() {
             } else {
                 alert(data.msg)
             }
-           
-            
         });
-  
     }  
 
     useEffect(() => {
@@ -41,7 +38,12 @@ function Login() {
             }
         })
         .then(res => res.json())
-        .then(data => data.isLoggedIn ? window.history.pushState({}, '', '/'): null )
+        .then(data =>  {
+            if(data.isLoggedIn) {
+                window.history.pushState({}, '', '/')
+                location.reload();
+            }
+        })
     }, [])
 
 

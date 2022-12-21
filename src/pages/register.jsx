@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 function Register() {
 
@@ -22,6 +22,23 @@ function Register() {
           .then(data => this.setPostData({ postId: data.id }));
   
     }  
+
+    useEffect(() => {
+        fetch('http://localhost:8000/api/user/username', {
+            method: 'POST',
+            headers: {
+                "x-access-token": localStorage.getItem('token')
+            }
+        })
+        .then(res => res.json())
+        .then(data =>  {
+            if(data.isLoggedIn) {
+                window.history.pushState({}, '', '/')
+                location.reload();
+            }
+        })
+    }, [])
+
 
 
     return (
