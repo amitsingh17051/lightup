@@ -17,14 +17,6 @@ function Navigation() {
     const [userId, setUserId] = useState();
     
 
-    const showDropDownHandler = () => {
-      const dropDown = document.querySelector('ul.dropdown-menu');
-      if (dropDown.style.display === "none") {
-        dropDown.style.display = "block";
-      } else {
-        dropDown.style.display = "none";
-      }
-    }
 
     useEffect(() => {
       fetch('http://localhost:8000/api/user/username', {
@@ -60,10 +52,10 @@ function Navigation() {
                   <>
                  
                   <li className="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={showDropDownHandler}>
+                    <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                     {userName}
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul className="dropdown-menu">
                       <li className="nav-item">
                         <Link className="nav-link" to="/idea-manager">Manage Your Ideas</Link>
                       </li>
